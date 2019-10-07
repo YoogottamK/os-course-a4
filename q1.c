@@ -3,12 +3,17 @@
 #include <sys/ipc.h>
 #include <time.h>
 #include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
-typedef struct args {
+#define PRINT_SORTED 0
+
+typedef struct Args {
     int l,
         r,
         *arr;
-} args;
+} Args;
 
 typedef enum {
     NORMAL,
@@ -28,11 +33,6 @@ int * getSharedMemory(size_t size);
 void sort(int * arr, int n, Strategy s);
 
 /*
- * quicksort algo, the normal way
- */
-void quickSort(int * arr, int l, int r);
-
-/*
  * swaps int values present at a and b
  */
 void swap(int * a, int * b);
@@ -50,6 +50,26 @@ int partition(int * arr, int l, int r);
  */
 int randomInt(int l, int r);
 
+/*
+ * copies values from array a to array b
+ */
+void copy(int * a, int * b, int n);
+
+/*
+ * quicksort algo, the normal way
+ */
+void quickSort(int * arr, int l, int r);
+
+/*
+ * quicksort algo, using processes
+ */
+void quickSortProcess(int * arr, int l, int r);
+
+/*
+ * quicksort algo, using threads
+ */
+void * quickSortThread(void * a);
+
 int main() {
     srand(time(0));
 
@@ -57,11 +77,22 @@ int main() {
     scanf("%d", &n);
 
     int * arr = getSharedMemory(sizeof(int) * n);
+    int * inp = (int *) malloc(sizeof(int) * n);
 
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < n; i++) {
         scanf("%d", arr + i);
+        inp[i] = arr[i];
+    }
 
     sort(arr, n, NORMAL);
+
+    copy(inp, arr, n);
+
+    sort(arr, n, PROC);
+
+    copy(inp, arr, n);
+
+    sort(arr, n, THREAD);
 
     return 0;
 }
@@ -120,10 +151,13 @@ void sort(int * arr, int n, Strategy s) {
         case PROC:
             printf("Strategy: Process\n");
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            quickSortProcess(arr, 0, n - 1);
             break;
         case THREAD:
             printf("Strategy: Thread\n");
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            Args args = { .arr = arr, .l = 0, .r = n - 1 };
+            quickSortThread(&args);
             break;
         default:
             printf("Unknown strategy %d\n", s);
@@ -133,9 +167,17 @@ void sort(int * arr, int n, Strategy s) {
     clock_gettime(CLOCK_MONOTONIC_RAW, &end);
 
     printf("Time taken: %.09lfs\n", getRunTime(end) - getRunTime(start));
+
+    if(PRINT_SORTED) {
+        for(int i = 0; i < n; i++)
+            printf("%d ", arr[i]);
+        printf("\n");
+    }
+}
+
+void copy(int * a, int * b, int n) {
     for(int i = 0; i < n; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
+        b[i] = a[i];
 }
 
 void quickSort(int * arr, int l, int r) {
@@ -145,4 +187,54 @@ void quickSort(int * arr, int l, int r) {
 
     quickSort(arr, l, p - 1);
     quickSort(arr, p + 1, r);
+}
+
+void quickSortProcess(int * arr, int l, int r) {
+    if(l >= r) return;
+
+    int p = partition(arr, l, r);
+
+    int p1 = fork();
+    int p2;
+
+    if(p1 == 0) {
+        quickSort(arr, l, p - 1);
+        exit(0);
+    } else {
+        p2 = fork();
+        if(p2 == 0) {
+            quickSort(arr, p + 1, r);
+            exit(0);
+        } else {
+            waitpid(p1, 0, 0);
+            waitpid(p2, 0, 0);
+        }
+    }
+}
+
+void * quickSortThread(void * args) {
+    Args * a = (Args*) args,
+         a1,
+         a2;
+
+    if(a->l >= a->r) return 0;
+
+    int p = partition(a->arr, a->l, a->r);
+
+    a1.arr = a2.arr = a->arr;
+
+    a1.l = a->l;
+    a1.r = p - 1;
+
+    a2.l = p + 1;
+    a2.r = a->r;
+
+    pthread_t t1, t2;
+    pthread_create(&t1, 0, quickSortThread, &a1);
+    pthread_create(&t2, 0, quickSortThread, &a2);
+
+    pthread_join(t1, 0);
+    pthread_join(t2, 0);
+
+    return 0;
 }
