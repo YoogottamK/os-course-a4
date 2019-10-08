@@ -183,6 +183,17 @@ void copy(int * a, int * b, int n) {
 void quickSort(int * arr, int l, int r) {
     if(l >= r) return;
 
+    if(r - l + 1 <= 5) {
+        for(int i = l; i < r; i++) {
+            int j = i + 1;
+
+            for(; j <= r; j++)
+                if(arr[j] < arr[i] && j <= r)
+                    swap(arr + i, arr + j);
+        }
+        return;
+    }
+
     int p = partition(arr, l, r);
 
     quickSort(arr, l, p - 1);
@@ -191,6 +202,17 @@ void quickSort(int * arr, int l, int r) {
 
 void quickSortProcess(int * arr, int l, int r) {
     if(l >= r) return;
+
+    if(r - l + 1 <= 5) {
+        for(int i = l; i < r; i++) {
+            int j = i + 1;
+
+            for(; j <= r; j++)
+                if(arr[j] < arr[i] && j <= r)
+                    swap(arr + i, arr + j);
+        }
+        return;
+    }
 
     int p = partition(arr, l, r);
 
@@ -218,6 +240,17 @@ void * quickSortThread(void * args) {
          a2;
 
     if(a->l >= a->r) return 0;
+
+    if(a->r - a->l + 1 <= 5) {
+        for(int i = a->l; i < a->r; i++) {
+            int j = i + 1;
+
+            for(; j <= a->r; j++)
+                if(a->arr[j] < a->arr[i] && j <= a->r)
+                    swap(a->arr + i, a->arr + j);
+        }
+        return 0;
+    }
 
     int p = partition(a->arr, a->l, a->r);
 
