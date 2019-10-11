@@ -1,0 +1,77 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/3fdf28bc/
+CFLAGS	Makefile	/^CFLAGS = -g -Wall -Wextra -pthread$/;"	m
+Cab	main.h	/^typedef struct Cab {$/;"	s
+Cab	main.h	/^} Cab;$/;"	t	typeref:struct:Cab
+CabState	main.h	/^typedef enum CabState {$/;"	g
+CabState	main.h	/^} CabState;$/;"	t	typeref:enum:CabState
+CabType	main.h	/^typedef enum CabType {$/;"	g
+CabType	main.h	/^} CabType;$/;"	t	typeref:enum:CabType
+K	main.h	/^    K, \/\/ number of payment servers$/;"	v	typeref:typename:int
+M	main.h	/^    M, \/\/ number of riders$/;"	v	typeref:typename:int
+MAX_ARRIVAL_TIME	rider.c	/^      MAX_ARRIVAL_TIME = 5;$/;"	v	typeref:typename:const int
+MAX_RIDE_TIME	rider.c	/^      MAX_RIDE_TIME = 10,$/;"	v	typeref:typename:const int
+MAX_WAIT_TIME	rider.c	/^const int MAX_WAIT_TIME = 10,$/;"	v	typeref:typename:const int
+N	main.h	/^int N, \/\/ number of cabs$/;"	v	typeref:typename:int
+POOL	main.h	/^    POOL = 2$/;"	e	enum:CabType
+PREMIER	main.h	/^    PREMIER = 1,$/;"	e	enum:CabType
+Rider	main.h	/^typedef struct Rider {$/;"	s
+Rider	main.h	/^} Rider;$/;"	t	typeref:struct:Rider
+Server	server.h	/^typedef struct Server {$/;"	s
+Server	server.h	/^} Server;$/;"	t	typeref:struct:Server
+__CAB_H	cab.h	/^#define __CAB_H$/;"	d
+__MAIN_H	main.h	/^#define __MAIN_H$/;"	d
+__RIDER_H	rider.h	/^#define __RIDER_H$/;"	d
+__SERVERS_H	server.h	/^#define __SERVERS_H$/;"	d
+acceptPayment	server.c	/^void * acceptPayment(void * s) {$/;"	f	typeref:typename:void *
+accessCabs	main.h	/^pthread_mutex_t accessCabs,$/;"	v	typeref:typename:pthread_mutex_t
+all	Makefile	/^all: rider.o server.o cab.o main.o$/;"	t
+allCabs	main.h	/^Cab ** allCabs;$/;"	v	typeref:typename:Cab **
+allRiders	main.h	/^Rider ** allRiders;$/;"	v	typeref:typename:Rider **
+arrivalTime	main.h	/^        arrivalTime;$/;"	m	struct:Rider	typeref:typename:int
+assignCab	rider.c	/^void assignCab(Rider * r) {$/;"	f	typeref:typename:void
+bookCab	rider.c	/^bool bookCab(Rider * r) {$/;"	f	typeref:typename:bool
+cab	main.h	/^    Cab * cab;$/;"	m	struct:Rider	typeref:typename:Cab *
+cab.o	Makefile	/^cab.o: cab.h cab.c main.h$/;"	t
+cabType	main.h	/^    CabType cabType;$/;"	m	struct:Rider	typeref:typename:CabType
+canGetPool	rider.c	/^bool canGetPool() {$/;"	f	typeref:typename:bool
+canGetPremier	rider.c	/^bool canGetPremier() {$/;"	f	typeref:typename:bool
+checkFree	rider.c	/^int checkFree(Cab c) {$/;"	f	typeref:typename:int
+clean	Makefile	/^clean:$/;"	t
+condWait	main.h	/^pthread_cond_t * condWait;$/;"	v	typeref:typename:pthread_cond_t *
+destroy	main.c	/^void destroy() {$/;"	f	typeref:typename:void
+freeCabs	main.h	/^    freeCabs;     \/\/ number of cabs in state waitState$/;"	v	typeref:typename:int
+freePoolOnes	main.h	/^    freePoolOnes, \/\/ number of cabs in state onRidePoolOne$/;"	v	typeref:typename:int
+getFutureTime	rider.c	/^struct timespec * getFutureTime(int seconds) {$/;"	f	typeref:struct:timespec *
+handleRider	rider.c	/^void * handleRider(void * r) {$/;"	f	typeref:typename:void *
+init	main.c	/^void init() {$/;"	f	typeref:typename:void
+initCab	cab.c	/^void initCab(int uid) {$/;"	f	typeref:typename:void
+initPaymentServer	server.c	/^void initPaymentServer(int i) {$/;"	f	typeref:typename:void
+initRider	rider.c	/^void initRider(int uid) {$/;"	f	typeref:typename:void
+main	main.c	/^int main() {$/;"	f	typeref:typename:int
+main.o	Makefile	/^main.o: main.h main.c cab.h server.h rider.h$/;"	t
+onRidePoolFull	main.h	/^    onRidePoolFull$/;"	e	enum:CabState
+onRidePoolOne	main.h	/^    onRidePoolOne,$/;"	e	enum:CabState
+onRidePremier	main.h	/^    onRidePremier,$/;"	e	enum:CabState
+paymentMutex	main.h	/^                paymentMutex;$/;"	v	typeref:typename:pthread_mutex_t
+paymentServers	main.h	/^sem_t paymentServers; \/\/ semaphore for payment servers$/;"	v	typeref:typename:sem_t
+r1	main.h	/^    struct Rider * r1, * r2;$/;"	m	struct:Cab	typeref:struct:Rider *
+r2	main.h	/^    struct Rider * r1, * r2;$/;"	m	struct:Cab	typeref:struct:Rider **
+rideTime	main.h	/^        rideTime,$/;"	m	struct:Rider	typeref:typename:int
+rider.o	Makefile	/^rider.o: rider.h rider.c main.h$/;"	t
+riders_t	main.h	/^      * riders_t;  \/\/ will contain thread ids for all the riders$/;"	v	typeref:typename:pthread_t **
+server.o	Makefile	/^server.o: server.h server.c main.h$/;"	t
+servers_t	main.h	/^pthread_t * servers_t, \/\/ will contain thread ids for all the servers$/;"	v	typeref:typename:pthread_t *
+state	main.h	/^    CabState state;$/;"	m	struct:Cab	typeref:typename:CabState
+uid	main.h	/^    int uid,$/;"	m	struct:Rider	typeref:typename:int
+uid	main.h	/^    int uid;$/;"	m	struct:Cab	typeref:typename:int
+uid	server.h	/^    int uid;$/;"	m	struct:Server	typeref:typename:int
+waitState	main.h	/^    waitState,$/;"	e	enum:CabState
+waitTime	main.h	/^        waitTime,$/;"	m	struct:Rider	typeref:typename:int
+waitingForCab	main.h	/^CabType * waitingForCab;$/;"	v	typeref:typename:CabType *
+wantsToPay	main.h	/^    bool wantsToPay;$/;"	m	struct:Rider	typeref:typename:bool
