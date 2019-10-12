@@ -90,7 +90,7 @@ int main() {
 
     sort(arr, n, PROC);
 
-    if(n <= 10000) {
+    if(n <= 50000) {
         copy(inp, arr, n);
         sort(arr, n, THREAD);
     }
