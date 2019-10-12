@@ -117,7 +117,7 @@ bool bookCab(Rider * r) {
 }
 
 void initRider(int uid) {
-    Rider * r = (Rider *) malloc(sizeof(Rider));
+    Rider * r = (Rider *) getSharedMemory(sizeof(Rider));
 
     r->uid = uid;
     r->rideTime = 1 + (rand() % MAX_RIDE_TIME); // 1->PREMIER, 2->POOL
@@ -177,7 +177,7 @@ int checkFree(Cab * c) {
 }
 
 struct timespec * getFutureTime(int seconds) {
-    struct timespec * t = (struct timespec *) malloc(sizeof(struct timespec));
+    struct timespec * t = (struct timespec *) getSharedMemory(sizeof(struct timespec));
 
     clock_gettime(CLOCK_REALTIME, t);
     t->tv_sec += seconds;

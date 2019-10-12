@@ -81,4 +81,7 @@ Cab ** allCabs;
  */
 Rider ** allRiders;
 
+
+void * getSharedMemory(size_t size);
+
 #endif // __MAIN_H

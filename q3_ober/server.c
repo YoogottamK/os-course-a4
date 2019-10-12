@@ -40,7 +40,7 @@ void * acceptPayment(void * s) {
 }
 
 void initPaymentServer(int i) {
-    Server * s = (Server *) malloc(sizeof(Server));
+    Server * s = (Server *) getSharedMemory(sizeof(Server));
     s->uid = i;
 
     pthread_create(servers_t[i], 0, acceptPayment, s);

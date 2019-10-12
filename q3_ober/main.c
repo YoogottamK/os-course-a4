@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <pthread.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
 #include <unistd.h>
 
 #include "main.h"
@@ -21,23 +23,23 @@ void init() {
     freePoolOnes = 0;
     freeCabs = N;
 
-    waitingForCab = (CabType *) malloc(sizeof(int) * N);
+    waitingForCab = (CabType *) getSharedMemory(sizeof(int) * N);
     for(int i = 0; i < N; i++)
         waitingForCab[i] = 0;
 
-    allCabs = (Cab **) malloc(sizeof(Cab *) * N);
-    allRiders = (Rider **) malloc(sizeof(Rider *) * M);
+    allCabs = (Cab **) getSharedMemory(sizeof(Cab *) * N);
+    allRiders = (Rider **) getSharedMemory(sizeof(Rider *) * M);
 
-    servers_t = (pthread_t **) malloc(sizeof(pthread_t *) * K);
-    riders_t = (pthread_t **) malloc(sizeof(pthread_t *) * M);
+    servers_t = (pthread_t **) getSharedMemory(sizeof(pthread_t *) * K);
+    riders_t = (pthread_t **) getSharedMemory(sizeof(pthread_t *) * M);
 
     for(int i = 0; i < K; i++)
-       servers_t[i] = (pthread_t *) malloc(sizeof(pthread_t));
+       servers_t[i] = (pthread_t *) getSharedMemory(sizeof(pthread_t));
 
     for(int i = 0; i < M; i++)
-        riders_t[i] = (pthread_t *) malloc(sizeof(pthread_t));
+        riders_t[i] = (pthread_t *) getSharedMemory(sizeof(pthread_t));
 
-    condWait = (pthread_cond_t *) malloc(sizeof(pthread_cond_t) * M);
+    condWait = (pthread_cond_t *) getSharedMemory(sizeof(pthread_cond_t) * M);
     for(int i = 0; i < M; i++)
         pthread_cond_init(&condWait[i], 0);
 
@@ -74,4 +76,20 @@ int main() {
     destroy();
 
     return 0;
+}
+
+
+void * getSharedMemory(size_t size) {
+    key_t key = IPC_PRIVATE;
+    int id = shmget(key, size, IPC_CREAT | 0666);
+
+    if(id == -1)
+        perror("SHMGET FAILED");
+
+    void* ans = (void *)shmat(id, 0, 0); 
+    if(ans == (void*) -1){
+        perror("SHMAT FAILED");
+    }
+
+    return ans;
 }

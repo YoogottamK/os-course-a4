@@ -4,7 +4,7 @@
 #include "cab.h"
 
 void initCab(int uid) {
-    Cab * c = (Cab *) malloc(sizeof(Cab));
+    Cab * c = (Cab *) getSharedMemory(sizeof(Cab));
 
     c->state = waitState;
     c->uid = uid;

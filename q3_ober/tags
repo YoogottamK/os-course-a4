@@ -48,6 +48,7 @@ destroy	main.c	/^void destroy() {$/;"	f	typeref:typename:void
 freeCabs	main.h	/^    freeCabs;     \/\/ number of cabs in state waitState$/;"	v	typeref:typename:int
 freePoolOnes	main.h	/^    freePoolOnes, \/\/ number of cabs in state onRidePoolOne$/;"	v	typeref:typename:int
 getFutureTime	rider.c	/^struct timespec * getFutureTime(int seconds) {$/;"	f	typeref:struct:timespec *
+getSharedMemory	main.c	/^void * getSharedMemory(size_t size) {$/;"	f	typeref:typename:void *
 handleRider	rider.c	/^void * handleRider(void * r) {$/;"	f	typeref:typename:void *
 handoverCab	rider.c	/^bool handoverCab(Rider * rider) {$/;"	f	typeref:typename:bool
 init	main.c	/^void init() {$/;"	f	typeref:typename:void
