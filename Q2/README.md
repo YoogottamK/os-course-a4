@@ -115,6 +115,4 @@ while(!gotSlot) {
         pthread_mutex_unlock(&tables[i]->mutex);
     }
 }
-
-return t;
 ```
