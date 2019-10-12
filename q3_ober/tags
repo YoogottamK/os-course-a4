@@ -41,7 +41,7 @@ cab.o	Makefile	/^cab.o: cab.h cab.c main.h$/;"	t
 cabType	main.h	/^    CabType cabType;$/;"	m	struct:Rider	typeref:typename:CabType
 canGetPool	rider.c	/^bool canGetPool() {$/;"	f	typeref:typename:bool
 canGetPremier	rider.c	/^bool canGetPremier() {$/;"	f	typeref:typename:bool
-checkFree	rider.c	/^int checkFree(Cab c) {$/;"	f	typeref:typename:int
+checkFree	rider.c	/^int checkFree(Cab * c) {$/;"	f	typeref:typename:int
 clean	Makefile	/^clean:$/;"	t
 condWait	main.h	/^pthread_cond_t * condWait;$/;"	v	typeref:typename:pthread_cond_t *
 destroy	main.c	/^void destroy() {$/;"	f	typeref:typename:void

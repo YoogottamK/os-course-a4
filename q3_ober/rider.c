@@ -12,7 +12,7 @@ const int MAX_WAIT_TIME = 10,
 
 void * handleRider(void * r);
 
-int checkFree(Cab c);
+int checkFree(Cab * c);
 
 struct timespec * getFutureTime(int seconds);
 
@@ -27,7 +27,9 @@ void assignCab(Rider * r) {
         for(int i = 0; i < N && !gotOne; i++) {
             if(allCabs[i]->state == waitState ||
                     allCabs[i]->state == onRidePoolOne) {
-                int x = checkFree(*allCabs[i]);
+                printf("0x%lx::", allCabs[i]);
+                int x = checkFree(allCabs[i]);
+                printf("0x%lx\n", allCabs[i]);
 
                 if(freePoolOnes > 0 && (x == 1 || x == 2)) {
                     gotOne = true;
@@ -119,7 +121,7 @@ void initRider(int uid) {
     r->uid = uid;
     r->rideTime = 1 + (rand() % MAX_RIDE_TIME); // 1->PREMIER, 2->POOL
     r->waitTime = 1 + (rand() % MAX_WAIT_TIME);
-    r->arrivalTime = 1 + (rand() % MAX_ARRIVAL_TIME);
+    r->arrivalTime = 3 + (rand() % MAX_ARRIVAL_TIME);
     r->cabType = (CabType) (rand() % 2) + 1;
     r->wantsToPay = 0;
     r->cab = 0;
@@ -162,12 +164,12 @@ void * handleRider(void * r) {
     pthread_exit(0);
 }
 
-int checkFree(Cab c) {
+int checkFree(Cab * c) {
     int r = 0;
 
-    if(!!c.r1)
+    if(!!c->r1)
         r |= 1;
-    if(!!c.r2)
+    if(!!c->r2)
         r |= 2;
 
     return r;
@@ -211,7 +213,7 @@ bool handoverCab(Rider * rider) {
             }
         }
     } else if(rider->cabType == POOL) {
-        int x = checkFree(*(rider->cab));
+        int x = checkFree(rider->cab);
 
         if(x == 3) {
             rider->cab->state = onRidePoolOne;
