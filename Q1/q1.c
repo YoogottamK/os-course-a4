@@ -90,9 +90,10 @@ int main() {
 
     sort(arr, n, PROC);
 
-    copy(inp, arr, n);
-
-    sort(arr, n, THREAD);
+    if(n <= 10000) {
+        copy(inp, arr, n);
+        sort(arr, n, THREAD);
+    }
 
     return 0;
 }
