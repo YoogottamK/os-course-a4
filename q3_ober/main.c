@@ -28,8 +28,14 @@ void init() {
     allCabs = (Cab **) malloc(sizeof(Cab *) * N);
     allRiders = (Rider **) malloc(sizeof(Rider *) * M);
 
-    servers_t = (pthread_t *) malloc(sizeof(pid_t) * K);
-    riders_t = (pthread_t *) malloc(sizeof(pid_t) * M);
+    servers_t = (pthread_t **) malloc(sizeof(pthread_t *) * K);
+    riders_t = (pthread_t **) malloc(sizeof(pthread_t *) * M);
+
+    for(int i = 0; i < K; i++)
+       servers_t[i] = (pthread_t *) malloc(sizeof(pthread_t));
+
+    for(int i = 0; i < M; i++)
+        riders_t[i] = (pthread_t *) malloc(sizeof(pthread_t));
 
     condWait = (pthread_cond_t *) malloc(sizeof(pthread_cond_t) * M);
     for(int i = 0; i < M; i++)
@@ -54,18 +60,16 @@ int main() {
 
     init();
 
-    for(int i = 0; i < M; i++) {
-        pthread_join(riders_t[i], 0);
-        printf("JOINING SOME THREAD\n");
-    }
+    for(int i = 0; i < M; i++)
+        pthread_join(*riders_t[i], 0);
 
-    sleep(2);
-
-    for(int i = 0; i < K; i++) {
-        printf("GOING TO KILL SERVER\n");
+    // sending signal to server that
+    // it's over
+    for(int i = 0; i < K; i++)
         sem_post(&paymentServers);
-        pthread_join(servers_t[i], 0);
-    }
+
+    for(int i = 0; i < K; i++)
+        pthread_join(*servers_t[i], 0);
 
     destroy();
 

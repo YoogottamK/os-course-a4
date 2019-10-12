@@ -52,8 +52,8 @@ sem_t paymentServers; // semaphore for payment servers
 pthread_mutex_t accessCabs,
                 paymentMutex;
 
-pthread_t * servers_t, // will contain thread ids for all the servers
-      * riders_t;  // will contain thread ids for all the riders
+pthread_t ** servers_t, // will contain thread ids for all the servers
+      ** riders_t;  // will contain thread ids for all the riders
 
 /*
  * Contains conditions for all the riders

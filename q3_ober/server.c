@@ -43,8 +43,5 @@ void initPaymentServer(int i) {
     Server * s = (Server *) malloc(sizeof(Server));
     s->uid = i;
 
-    pthread_t t;
-    pthread_create(&t, 0, acceptPayment, s);
-
-    servers_t[i] = t;
+    pthread_create(servers_t[i], 0, acceptPayment, s);
 }

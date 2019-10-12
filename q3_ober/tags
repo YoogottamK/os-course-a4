@@ -49,6 +49,7 @@ freeCabs	main.h	/^    freeCabs;     \/\/ number of cabs in state waitState$/;"	v
 freePoolOnes	main.h	/^    freePoolOnes, \/\/ number of cabs in state onRidePoolOne$/;"	v	typeref:typename:int
 getFutureTime	rider.c	/^struct timespec * getFutureTime(int seconds) {$/;"	f	typeref:struct:timespec *
 handleRider	rider.c	/^void * handleRider(void * r) {$/;"	f	typeref:typename:void *
+handoverCab	rider.c	/^bool handoverCab(Rider * rider) {$/;"	f	typeref:typename:bool
 init	main.c	/^void init() {$/;"	f	typeref:typename:void
 initCab	cab.c	/^void initCab(int uid) {$/;"	f	typeref:typename:void
 initPaymentServer	server.c	/^void initPaymentServer(int i) {$/;"	f	typeref:typename:void
@@ -62,11 +63,12 @@ paymentMutex	main.h	/^                paymentMutex;$/;"	v	typeref:typename:pthre
 paymentServers	main.h	/^sem_t paymentServers; \/\/ semaphore for payment servers$/;"	v	typeref:typename:sem_t
 r1	main.h	/^    struct Rider * r1, * r2;$/;"	m	struct:Cab	typeref:struct:Rider *
 r2	main.h	/^    struct Rider * r1, * r2;$/;"	m	struct:Cab	typeref:struct:Rider **
+reachDestination	rider.c	/^void reachDestination(Rider * r) {$/;"	f	typeref:typename:void
 rideTime	main.h	/^        rideTime,$/;"	m	struct:Rider	typeref:typename:int
 rider.o	Makefile	/^rider.o: rider.h rider.c main.h$/;"	t
-riders_t	main.h	/^      * riders_t;  \/\/ will contain thread ids for all the riders$/;"	v	typeref:typename:pthread_t **
+riders_t	main.h	/^      ** riders_t;  \/\/ will contain thread ids for all the riders$/;"	v	typeref:typename:pthread_t ****
 server.o	Makefile	/^server.o: server.h server.c main.h$/;"	t
-servers_t	main.h	/^pthread_t * servers_t, \/\/ will contain thread ids for all the servers$/;"	v	typeref:typename:pthread_t *
+servers_t	main.h	/^pthread_t ** servers_t, \/\/ will contain thread ids for all the servers$/;"	v	typeref:typename:pthread_t **
 state	main.h	/^    CabState state;$/;"	m	struct:Cab	typeref:typename:CabState
 uid	main.h	/^    int uid,$/;"	m	struct:Rider	typeref:typename:int
 uid	main.h	/^    int uid;$/;"	m	struct:Cab	typeref:typename:int
