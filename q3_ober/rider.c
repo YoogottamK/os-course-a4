@@ -109,6 +109,7 @@ bool bookCab(Rider * r) {
 
         pthread_mutex_unlock(&accessCabs);
     } else {
+        assert(0);
         return false;
     }
 
@@ -161,7 +162,7 @@ void * handleRider(void * r) {
         printf("Rider %2d timed out\n", rider->uid);
     }
 
-    pthread_exit(0);
+    return NULL;
 }
 
 int checkFree(Cab * c) {

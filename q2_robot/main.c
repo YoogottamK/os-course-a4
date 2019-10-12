@@ -11,8 +11,8 @@
 void init() {
     srand(time(0));
 
-    robots = (Robot **) malloc(sizeof(Robot *) * M);
     tables = (Table **) malloc(sizeof(Table *) * N);
+    robots = (Robot **) malloc(sizeof(Robot *) * M);
     students = (Student **) malloc(sizeof(Student *) * K);
 
     robot_t = (pthread_t *) malloc(sizeof(pthread_t) * M);
@@ -42,10 +42,11 @@ int main() {
         char * students = (char *) malloc(1024);
         char * num = (char *) malloc(10);
         students[0] = 0;
+        num[0] = 0;
 
         for(int j = 0; j < 10; j++) {
             if(tables[i]->eating[j] > 0) {
-                snprintf(num, 10, "%d ", tables[i]->eating[j]);
+                sprintf(num, "%d ", tables[i]->eating[j]);
                 strcat(students, num);
                 tables[i]->eating[j] = -1;
             }

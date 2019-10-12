@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <assert.h>
 
 #include "semaphore.h"
 

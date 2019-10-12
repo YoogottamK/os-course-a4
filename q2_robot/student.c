@@ -27,8 +27,10 @@ Table * wait_for_slot(Student * s) {
                 t = tables[i];
 
                 for(int j = 0; j < 10; j++)
-                    if(tables[i]->eating[j] < 0)
+                    if(tables[i]->eating[j] < 0) {
                         tables[i]->eating[j] = s->uid;
+                        break;
+                    }
 
                 pthread_mutex_unlock(&tables[i]->mutex);
                 break;
