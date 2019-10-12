@@ -45,7 +45,7 @@ int main() {
         num[0] = 0;
 
         for(int j = 0; j < 10; j++) {
-            if(tables[i]->eating[j] > 0) {
+            if(tables[i]->eating[j] >= 0) {
                 sprintf(num, "%d ", tables[i]->eating[j]);
                 strcat(students, num);
                 tables[i]->eating[j] = -1;

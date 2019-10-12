@@ -25,7 +25,7 @@ void ready_to_serve_table(Table * t, int slots) {
     students[0] = 0;
 
     for(int i = 0; i < 10; i++) {
-        if(t->eating[i] > 0) {
+        if(t->eating[i] >= 0) {
             snprintf(num, 10, "%d ", t->eating[i]);
             strcat(students, num);
             t->eating[i] = -1;
@@ -45,6 +45,8 @@ void * tableRunner(void * a) {
 
         while(t->container->capacity > 0)
             ready_to_serve_table(t, randRange(1, min(10, t->container->capacity)));
+
+        t->container = 0;
 
         printf("Serving table %d is empty, waiting to be refilled\n", t->uid);
     }
